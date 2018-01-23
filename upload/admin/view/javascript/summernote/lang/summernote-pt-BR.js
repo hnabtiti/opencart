@@ -14,12 +14,12 @@
       image: {
         image: 'Imagem',
         insert: 'Inserir imagem',
-        resizeFull: 'Redimensionar Completamente',
-        resizeHalf: 'Redimensionar pela Metade',
-        resizeQuarter: 'Redimensionar um Quarto',
-        floatLeft: 'Flutuar para Esquerda',
-        floatRight: 'Flutuar para Direira',
-        floatNone: 'Não Flutuar',
+        resizeFull: 'Resize Full',
+        resizeHalf: 'Resize Half',
+        resizeQuarter: 'Resize Quarter',
+        floatLeft: 'Float Left',
+        floatRight: 'Float Right',
+        floatNone: 'Float None',
         dragImageHere: 'Arraste uma imagem para cá',
         selectFromFiles: 'Selecione a partir dos arquivos',
         url: 'URL da imagem'
@@ -41,13 +41,7 @@
         openInNewWindow: 'Abrir em uma nova janela'
       },
       table: {
-        table: 'Tabela',
-        addRowAbove: 'Adicionar linha acima',
-        addRowBelow: 'Adicionar linha abaixo',
-        addColLeft: 'Adicionar coluna a esquerda',
-        addColRight: 'Adicionar coluna a direita',
-        delRow: 'Excluir linha',
-        delCol: 'Excluir coluna'
+        table: 'Tabela'
       },
       hr: {
         insert: 'Inserir linha horizontal'

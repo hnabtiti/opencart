@@ -23,9 +23,6 @@ function getURLVar(key) {
 }
 
 $(document).ready(function() {
-	// Add new div on each page
-	$('body').append('<div id="alert-box"></div>');
-
 	// Highlight any found errors
 	$('.text-danger').each(function() {
 		var element = $(this).parent().parent();
@@ -42,6 +39,15 @@ $(document).ready(function() {
 		$('#form-currency input[name=\'code\']').val($(this).attr('name'));
 
 		$('#form-currency').submit();
+	});
+
+	// Language
+	$('#form-language .language-select').on('click', function(e) {
+		e.preventDefault();
+
+		$('#form-language input[name=\'code\']').val($(this).attr('name'));
+
+		$('#form-language').submit();
 	});
 
 	/* Search */
@@ -127,10 +133,6 @@ $(document).ready(function() {
 	$(document).ajaxStop(function() {
 		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	});
-
-	$('#alert-box').on('click', '.close', function(){
-			$('#alert-box').removeClass('open');
-	});
 });
 
 // Cart add remove functions
@@ -155,9 +157,7 @@ var cart = {
 				}
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-					$('#alert-box').addClass('open');
+					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					// Need to set timeout otherwise it wont update the total
 					setTimeout(function () {
@@ -232,7 +232,7 @@ var cart = {
 			}
 		});
 	}
-};
+}
 
 var voucher = {
 	'add': function() {
@@ -267,7 +267,7 @@ var voucher = {
 			}
 		});
 	}
-};
+}
 
 var wishlist = {
 	'add': function(product_id) {
@@ -284,9 +284,7 @@ var wishlist = {
 				}
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-					$('#alert-box').addClass('open');
+					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 
 				$('#wishlist-total span').html(json['total']);
@@ -302,7 +300,7 @@ var wishlist = {
 	'remove': function() {
 
 	}
-};
+}
 
 var compare = {
 	'add': function(product_id) {
@@ -315,9 +313,7 @@ var compare = {
 				$('.alert-dismissible').remove();
 
 				if (json['success']) {
-					$('#alert-box').append('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-
-					$('#alert-box').addClass('open');
+					$('#content').parent().before('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 
 					$('#compare-total').html(json['total']);
 
@@ -332,7 +328,7 @@ var compare = {
 	'remove': function() {
 
 	}
-};
+}
 
 /* Agree to Terms */
 $(document).delegate('.agree', 'click', function(e) {
@@ -410,7 +406,7 @@ $(document).delegate('.agree', 'click', function(e) {
 				if (value && this.items[value]) {
 					this.select(this.items[value]);
 				}
-			};
+			}
 
 			// Show
 			this.show = function() {
@@ -422,12 +418,12 @@ $(document).delegate('.agree', 'click', function(e) {
 				});
 
 				$(this).siblings('ul.dropdown-menu').show();
-			};
+			}
 
 			// Hide
 			this.hide = function() {
 				$(this).siblings('ul.dropdown-menu').hide();
-			};
+			}
 
 			// Request
 			this.request = function() {
@@ -436,7 +432,7 @@ $(document).delegate('.agree', 'click', function(e) {
 				this.timer = setTimeout(function(object) {
 					object.source($(object).val(), $.proxy(object.response, object));
 				}, 200, this);
-			};
+			}
 
 			// Response
 			this.response = function(json) {
@@ -484,11 +480,11 @@ $(document).delegate('.agree', 'click', function(e) {
 				}
 
 				$(this).siblings('ul.dropdown-menu').html(html);
-			};
+			}
 
 			$(this).after('<ul class="dropdown-menu"></ul>');
 			$(this).siblings('ul.dropdown-menu').delegate('a', 'click', $.proxy(this.click, this));
 
 		});
-	};
+	}
 })(window.jQuery);

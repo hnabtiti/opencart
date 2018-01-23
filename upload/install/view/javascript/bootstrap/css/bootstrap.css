@@ -1107,7 +1107,7 @@ pre code {
   .col-sm-9,
   .col-sm-10,
   .col-sm-11 {
-    float: left;
+    float: right;
   }
   .col-sm-12 {
     width: 100%;

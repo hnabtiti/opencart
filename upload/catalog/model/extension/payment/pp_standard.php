@@ -43,9 +43,6 @@ class ModelExtensionPaymentPPStandard extends Model {
 			'RUB'
 		);
 
-		if (!in_array(strtoupper($this->session->data['currency']), $currencies)) {
-			$status = false;
-		}
 
 		$method_data = array();
 

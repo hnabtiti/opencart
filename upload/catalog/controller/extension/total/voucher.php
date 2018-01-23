@@ -10,8 +10,6 @@ class ControllerExtensionTotalVoucher extends Controller {
 				$data['voucher'] = '';
 			}
 
-			$data['language'] = $this->config->get('config_language');
-
 			return $this->load->view('extension/total/voucher', $data);
 		}
 	}
@@ -38,7 +36,7 @@ class ControllerExtensionTotalVoucher extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('checkout/cart');
 		} else {
 			$json['error'] = $this->language->get('error_voucher');
 		}

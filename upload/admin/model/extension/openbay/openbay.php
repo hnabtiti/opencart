@@ -632,24 +632,29 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			$sql .= " AND p.price <= '" . (double)$data['filter_price_to'] . "'";
 		}
 
-        if (!empty($data['filter_quantity']) && isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
-            $sql .= " AND p.quantity >= '" . $this->db->escape($data['filter_quantity']) . "'";
-        }
-        if (!empty($data['filter_quantity_to']) && isset($data['filter_quantity_to']) && !is_null($data['filter_quantity_to'])) {
-            $sql .= " AND p.quantity <= '" . $this->db->escape($data['filter_quantity_to']) . "'";
-        }
-        if (!empty($data['filter_status']) && isset($data['filter_status']) && !is_null($data['filter_status'])) {
-            $sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
-        }
-        if (!empty($data['filter_sku']) && isset($data['filter_sku']) && !is_null($data['filter_sku'])) {
-            $sql .= " AND p.sku != ''";
-        }
-        if (!empty($data['filter_desc']) && isset($data['filter_desc']) && !is_null($data['filter_desc'])) {
-            $sql .= " AND pd.description != ''";
-        }
-        if (!empty($data['filter_manufacturer']) && isset($data['filter_manufacturer']) && !is_null($data['filter_manufacturer'])) {
-            $sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer'] . "'";
-        }
+		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
+			$sql .= " AND p.quantity >= '" . $this->db->escape($data['filter_quantity']) . "'";
+		}
+
+		if (isset($data['filter_quantity_to']) && !is_null($data['filter_quantity_to'])) {
+			$sql .= " AND p.quantity <= '" . $this->db->escape($data['filter_quantity_to']) . "'";
+		}
+
+		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
+			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
+		}
+
+		if (isset($data['filter_sku']) && !is_null($data['filter_sku'])) {
+			$sql .= " AND p.sku != ''";
+		}
+
+		if (isset($data['filter_desc']) && !is_null($data['filter_desc'])) {
+			$sql .= " AND pd.description != ''";
+		}
+
+		if (isset($data['filter_manufacturer']) && !is_null($data['filter_manufacturer'])) {
+			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer'] . "'";
+		}
 
 		$sql .= " GROUP BY p.product_id";
 
@@ -699,12 +704,17 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_FORBID_REUSE => true,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_URL => HTTP_CATALOG . 'index.php?route=api/order/history&order_id=' . $order_id . '&token=' . $api_login['api_token'],
+			CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/order/history&order_id=' . $order_id . '&token=' . $api_login['token'],
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => http_build_query($data, '', "&"),
 			CURLOPT_TIMEOUT => 60,
 			CURLOPT_COOKIE => "PHPSESSID=" . $api_login['session_id'],
 		);
+
+		// Set SSL if required
+		if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+			$defaults[CURLOPT_PORT] = 443;
+		}
 
 		$curl = curl_init();
 		curl_setopt_array($curl, $defaults);
@@ -724,11 +734,16 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			CURLOPT_SSL_VERIFYPEER => 0,
 			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_URL => HTTP_CATALOG . 'index.php?route=api/login',
+			CURLOPT_URL => HTTPS_CATALOG . 'index.php?route=api/login',
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => http_build_query(array('key' => $key)),
 			CURLOPT_TIMEOUT => 60,
 		);
+
+		// Set SSL if required
+		if (substr(HTTPS_CATALOG, 0, 5) == 'https') {
+			$defaults[CURLOPT_PORT] = 443;
+		}
 
 		$curl = curl_init();
 		curl_setopt_array($curl, $defaults);
@@ -749,7 +764,7 @@ class ModelExtensionOpenBayOpenbay extends Model {
 
 		if (isset($json['success']) && isset($header_cookies['PHPSESSID'])) {
 			$response = [
-				'api_token' => $json['api_token'],
+				'token' => $json['token'],
 				'session_id' => $header_cookies['PHPSESSID']
 			];
 		} else {
@@ -809,6 +824,10 @@ class ModelExtensionOpenBayOpenbay extends Model {
 			}
 		}
 
-		return HTTP_CATALOG . 'image/' . $image_new;
+		if ($this->request->server['HTTPS']) {
+			return HTTPS_CATALOG . 'image/' . $image_new;
+		} else {
+			return HTTP_CATALOG . 'image/' . $image_new;
+		}
 	}
 }

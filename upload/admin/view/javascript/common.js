@@ -125,7 +125,6 @@ $(document).ready(function() {
 				dataType: 'html',
 				beforeSend: function() {
 					$button.prop('disabled', true);
-
 					if ($icon.length) {
 						$icon.attr('class', 'fa fa-circle-o-notch fa-spin');
 					}
@@ -154,24 +153,6 @@ $(document).ready(function() {
 
 			$element.popover('destroy');
 		});
-	});
-
-	// table dropdown responsive fix
-	$('.table-responsive').on('shown.bs.dropdown', function(e) {
-		var t = $(this),
-			m = $(e.target).find('.dropdown-menu'),
-			tb = t.offset().top + t.height(),
-			mb = m.offset().top + m.outerHeight(true),
-			d = 20;
-		if (t[0].scrollWidth > t.innerWidth()) {
-			if (mb + d > tb) {
-				t.css('padding-bottom', ((mb + d) - tb));
-			}
-		} else {
-			t.css('overflow', 'visible');
-		}
-	}).on('hidden.bs.dropdown', function() {
-		$(this).css({'padding-bottom': '', 'overflow': ''});
 	});
 });
 

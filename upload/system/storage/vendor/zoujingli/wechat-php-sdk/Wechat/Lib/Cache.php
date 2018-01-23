@@ -10,8 +10,7 @@ use Wechat\Loader;
  * @author Anyon <zoujingli@qq.com>
  * @date 2016-08-20 17:50
  */
-class Cache
-{
+class Cache {
 
     /**
      * 缓存位置
@@ -26,8 +25,7 @@ class Cache
      * @param int $expired
      * @return mixed
      */
-    static public function set($name, $value, $expired = 0)
-    {
+    static public function set($name, $value, $expired = 0) {
         if (isset(Loader::$callback['CacheSet'])) {
             return call_user_func_array(Loader::$callback['CacheSet'], func_get_args());
         }
@@ -40,8 +38,7 @@ class Cache
      * @param string $name
      * @return mixed
      */
-    static public function get($name)
-    {
+    static public function get($name) {
         if (isset(Loader::$callback['CacheGet'])) {
             return call_user_func_array(Loader::$callback['CacheGet'], func_get_args());
         }
@@ -59,8 +56,7 @@ class Cache
      * @param string $name
      * @return mixed
      */
-    static public function del($name)
-    {
+    static public function del($name) {
         if (isset(Loader::$callback['CacheDel'])) {
             return call_user_func_array(Loader::$callback['CacheDel'], func_get_args());
         }
@@ -73,8 +69,7 @@ class Cache
      * @param string $filename
      * @return mixed
      */
-    static public function put($line, $filename = '')
-    {
+    static public function put($line, $filename = '') {
         if (isset(Loader::$callback['CachePut'])) {
             return call_user_func_array(Loader::$callback['CachePut'], func_get_args());
         }
@@ -86,14 +81,13 @@ class Cache
      * 检查缓存目录
      * @return bool
      */
-    static protected function check()
-    {
+    static protected function check() {
         empty(self::$cachepath) && self::$cachepath = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Cache' . DIRECTORY_SEPARATOR;
         self::$cachepath = rtrim(self::$cachepath, '/\\') . DIRECTORY_SEPARATOR;
-        if (!is_dir(self::$cachepath) && !mkdir(self::$cachepath, 0755, true)) {
-            return false;
+        if (!is_dir(self::$cachepath) && !mkdir(self::$cachepath, 0755, TRUE)) {
+            return FALSE;
         }
-        return true;
+        return TRUE;
     }
 
 }

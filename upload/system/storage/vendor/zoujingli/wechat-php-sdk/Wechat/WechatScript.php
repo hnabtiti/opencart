@@ -4,6 +4,7 @@ namespace Wechat;
 
 use Wechat\Lib\Common;
 use Wechat\Lib\Tools;
+use Wechat\Loader;
 
 /**
  * 微信前端 JavaScript 签名SDK
@@ -11,8 +12,7 @@ use Wechat\Lib\Tools;
  * @author Anyon <zoujingli@qq.com>
  * @date 2016/06/28 11:24
  */
-class WechatScript extends Common
-{
+class WechatScript extends Common {
 
     /**
      * JSAPI授权TICKET
@@ -25,8 +25,7 @@ class WechatScript extends Common
      * @param string $appid
      * @return bool
      */
-    public function resetJsTicket($appid = '')
-    {
+    public function resetJsTicket($appid = '') {
         $this->jsapi_ticket = '';
         $authname = 'wechat_jsapi_ticket_' . empty($appid) ? $this->appid : $appid;
         Tools::removeCache($authname);
@@ -40,8 +39,7 @@ class WechatScript extends Common
      * @param string $access_token 获取 jsapi_ticket 指定 access_token
      * @return bool|string
      */
-    public function getJsTicket($appid = '', $jsapi_ticket = '', $access_token = '')
-    {
+    public function getJsTicket($appid = '', $jsapi_ticket = '', $access_token = '') {
         if (empty($access_token)) {
             if (!$this->access_token && !$this->getAccessToken()) {
                 return false;
@@ -91,8 +89,7 @@ class WechatScript extends Common
      * @param string $access_token 获取 jsapi_ticket 指定 access_token
      * @return array|bool 返回签名字串
      */
-    public function getJsSign($url, $timestamp = 0, $noncestr = '', $appid = '', $access_token = '')
-    {
+    public function getJsSign($url, $timestamp = 0, $noncestr = '', $appid = '', $access_token = '') {
         if (!$this->jsapi_ticket && !$this->getJsTicket($appid, '', $access_token) || empty($url)) {
             return false;
         }
@@ -116,9 +113,6 @@ class WechatScript extends Common
                 'translateVoice', 'getNetworkType', 'openLocation', 'getLocation',
                 'openProductSpecificView', 'addCard', 'chooseCard', 'openCard',
                 'startRecord', 'stopRecord', 'onVoiceRecordEnd', 'playVoice', 'pauseVoice', 'stopVoice', 'onVoicePlayEnd', 'uploadVoice', 'downloadVoice',
-                'openWXDeviceLib', 'closeWXDeviceLib', 'getWXDeviceInfos', 'sendDataToWXDevice', 'disconnectWXDevice', 'getWXDeviceTicket', 'connectWXDevice',
-                'startScanWXDevice', 'stopScanWXDevice', 'onWXDeviceBindStateChange', 'onScanWXDeviceResult', 'onReceiveDataFromWXDevice',
-                'onWXDeviceBluetoothStateChange', 'onWXDeviceStateChange'
             )
         );
     }

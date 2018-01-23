@@ -19,7 +19,7 @@ class ControllerCommonProfile extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']));
+			$this->response->redirect($this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true));
 		}
 
 		if (isset($this->session->data['success'])) {
@@ -76,17 +76,17 @@ class ControllerCommonProfile extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true)
 		);
 
-		$data['action'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token']);
+		$data['action'] = $this->url->link('common/profile', 'user_token=' . $this->session->data['user_token'], true);
 
-		$data['cancel'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token']);
+		$data['cancel'] = $this->url->link('common/dashboard', 'user_token=' . $this->session->data['user_token'], true);
 
 		if ($this->request->server['REQUEST_METHOD'] != 'POST') {
 			$user_info = $this->model_user_user->getUser($this->user->getId());
@@ -175,7 +175,7 @@ class ControllerCommonProfile extends Controller {
 		$user_info = $this->model_user_user->getUserByUsername($this->request->post['username']);
 
 		if ($user_info && ($this->user->getId() != $user_info['user_id'])) {
-			$this->error['warning'] = $this->language->get('error_username_exists');
+			$this->error['warning'] = $this->language->get('error_exists_username');
 		}
 
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
@@ -193,7 +193,7 @@ class ControllerCommonProfile extends Controller {
 		$user_info = $this->model_user_user->getUserByEmail($this->request->post['email']);
 
 		if ($user_info && ($this->user->getId() != $user_info['user_id'])) {
-			$this->error['warning'] = $this->language->get('error_email_exists');
+			$this->error['warning'] = $this->language->get('error_exists_email');
 		}
 
 		if ($this->request->post['password']) {

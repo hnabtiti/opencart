@@ -5,8 +5,6 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 		$data['bank'] = nl2br($this->config->get('payment_bank_transfer_bank' . $this->config->get('config_language_id')));
 
-		$data['language'] = $this->config->get('config_language');
-
 		return $this->load->view('extension/payment/bank_transfer', $data);
 	}
 
@@ -24,7 +22,7 @@ class ControllerExtensionPaymentBankTransfer extends Controller {
 
 			$this->model_checkout_order->addOrderHistory($this->session->data['order_id'], $this->config->get('payment_bank_transfer_order_status_id'), $comment, true);
 		
-			$json['redirect'] = $this->url->link('checkout/success', 'language=' . $this->config->get('config_language'));
+			$json['redirect'] = $this->url->link('checkout/success');
 		}
 		
 		$this->response->addHeader('Content-Type: application/json');

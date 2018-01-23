@@ -24,19 +24,19 @@ class ControllerInformationContact extends Controller {
 			$mail->setText($this->request->post['enquiry']);
 			$mail->send();
 
-			$this->response->redirect($this->url->link('information/contact/success', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('information/contact/success'));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('common/home')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('information/contact', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('information/contact')
 		);
 
 		if (isset($this->error['name'])) {
@@ -59,7 +59,7 @@ class ControllerInformationContact extends Controller {
 
 		$data['button_submit'] = $this->language->get('button_submit');
 
-		$data['action'] = $this->url->link('information/contact', 'language=' . $this->config->get('config_language'));
+		$data['action'] = $this->url->link('information/contact', '', true);
 
 		$this->load->model('tool/image');
 
@@ -175,15 +175,15 @@ class ControllerInformationContact extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('common/home')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('information/contact', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('information/contact')
 		);
 
-		$data['continue'] = $this->url->link('common/home', 'language=' . $this->config->get('config_language'));
+		$data['continue'] = $this->url->link('common/home');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');

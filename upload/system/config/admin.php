@@ -45,11 +45,5 @@ $_['action_event'] = array(
 	),
 	'view/*/before' => array(
 		'event/language'
-	),
-	//'model/*/after' => array(
-	//	'event/debug/before'
-	//),
-	//'model/*/after'  => array(
-	//	'event/debug/after'
-	//)
+	)
 );

@@ -4,7 +4,7 @@ class ControllerAccountForgotten extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->response->redirect($this->url->link('account/account', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('account/account', '', true));
 		}
 
 		$this->load->language('account/forgotten');
@@ -18,24 +18,24 @@ class ControllerAccountForgotten extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('account/login', 'language=' . $this->config->get('config_language')));
+			$this->response->redirect($this->url->link('account/login', '', true));
 		}
 
 		$data['breadcrumbs'] = array();
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('common/home')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/account', '', true)
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_forgotten'),
-			'href' => $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'))
+			'href' => $this->url->link('account/forgotten', '', true)
 		);
 
 		if (isset($this->error['warning'])) {
@@ -44,9 +44,9 @@ class ControllerAccountForgotten extends Controller {
 			$data['error_warning'] = '';
 		}
 
-		$data['action'] = $this->url->link('account/forgotten', 'language=' . $this->config->get('config_language'));
+		$data['action'] = $this->url->link('account/forgotten', '', true);
 
-		$data['back'] = $this->url->link('account/login', 'language=' . $this->config->get('config_language'));
+		$data['back'] = $this->url->link('account/login', '', true);
 
 		if (isset($this->request->post['email'])) {
 			$data['email'] = $this->request->post['email'];
